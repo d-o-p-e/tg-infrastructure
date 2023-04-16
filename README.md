@@ -1,6 +1,6 @@
-# **Politicia Infrastructure**
+# **Dope THATGIRL Infrastructure**
 
-Politicia Infrastructure organized by Terraform.
+Dope THATGIRL Infrastructure organized by Terraform.
 
 Mainly powered by AWS.
 
@@ -22,9 +22,7 @@ AWS_SECRET_KEY (STRING) : Secret Key for AWS account
 
 region (STRING) : region of environment in AWS
 
-politicia_media_cors_allowed_origins (LIST(STRING)) : S3 CORS configuration for Image & Video Bucket
-
-politicia_thumbnail_cors_allowed_origins (LIST(STRING)) : List of URLs to S3 CORS configuration for Thumbnail Bucket
+dope_media_cors_allowed_origins (LIST(STRING)) : S3 CORS configuration for Image & Video Bucket
 
 vpc_cidr (STRING) : Subnet Mask of VPC
 
