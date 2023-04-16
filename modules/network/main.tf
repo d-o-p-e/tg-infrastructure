@@ -5,7 +5,7 @@ resource "aws_vpc" "dope_vpc" {
   enable_dns_support = true
 
   tags = {
-    Name = "policitia-${var.environment}-vpc"
+    Name = "dope-${var.environment}-vpc"
     Environment = var.environment
   }
 }
