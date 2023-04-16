@@ -66,3 +66,8 @@ module "server" {
   tg_key_name           = var.tg_key_name
   tg_backend_certificate_arn = module.certificate.tg_backend_certificate_arn
 }
+
+module "image_repository" {
+  source = "./modules/image-repository"
+  
+}
