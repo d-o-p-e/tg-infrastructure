@@ -1,0 +1,13 @@
+version: 3
+
+tasks:
+  dev:
+    cmds:
+      - terraform workspace select development
+      - terraform init
+      - terraform apply -var-file="development.tfvars"
+  prod:
+    cmds:
+      - terraform workspace select production
+      - terraform init
+      - terraform apply -var-file="production.tfvars"
