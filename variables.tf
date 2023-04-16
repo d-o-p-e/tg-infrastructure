@@ -18,11 +18,6 @@ variable "dope_media_cors_allowed_origins" {
   description = "S3 CORS configuration for Media Bucket"
 }
 
-variable "dope_thumbnail_cors_allowed_origins" {
-  type    = list(string)
-  description = "S3 CORS configuration for Thumbnail Bucket"
-}
-
 variable "vpc_cidr" {
     type = string
     description = "Subnet Mask of VPC"
@@ -56,4 +51,44 @@ variable "cloudfront_restriction_type" {
 variable "cloudfront_restriction_countries" {
     type = list(string)
     description = "Blacklist/Whitelist of Countries allowed to access"
+}
+
+variable "db_username" {
+    type = string
+    description = "Username for DB"
+}
+
+variable "db_password" {
+    type = string
+    description = "Password for DB"
+}
+
+variable "webapp_origin" {
+    type = string
+    description = "Origin of web app"
+}
+
+variable "backend_origin" {
+    type = string
+    description = "Origin of Backend"
+}
+
+variable "fully_qualified_domain_names" {
+    type = list(string)
+    description = "FQDNs with certificates in Certificate Manager"
+}
+
+variable "tg_web_app_certificate_arn" {
+    type = string
+    description = "ARN of certificate of tg web app in US-EAST-1"
+}
+
+variable "tg_server_private_ip" {
+    type = string
+    description = "Private IP for TG Backend Server"
+}
+
+variable "tg_key_name" {
+    type = string
+    description = "Name of TG backend server EC2 Key pair"
 }
