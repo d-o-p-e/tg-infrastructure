@@ -54,7 +54,7 @@ module "cloudfront" {
   tg_web_app_bucket_id              = module.web-app.tg_web_app_bucket_id
   tg_web_app_domain_name            = module.web-app.tg_web_app_domain_name
   webapp_origin                     = var.webapp_origin
-  tg_web_app_certificate_arn        = var.tg_web_app_certificate_arn
+  tg_web_app_certificate_arn        = module.certificate.tg_web_app_certificate_arn
 }
 
 module "server" {
