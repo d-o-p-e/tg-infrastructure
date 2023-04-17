@@ -1,6 +1,6 @@
-# **Dope THATGIRL Infrastructure**
+# **Dope Committed Infrastructure**
 
-Dope THATGIRL Infrastructure organized by Terraform.
+Dope Committed Infrastructure organized by Terraform.
 
 Mainly powered by AWS.
 
