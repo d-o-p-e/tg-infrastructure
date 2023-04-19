@@ -42,9 +42,9 @@ db_username (STRING) : Username for DB
 
 db_password (STRING) : Password for DB
 
-webapp_origin (STRING) : Origin URL of Web app
+webapp_origin (STRING) : Origin path of Web app
 
-backend_origin (STRING) : Origin URL of Backend
+backend_origin (STRING) : Origin path of Backend
 
 fully_qualified_domain_names (LIST(STRING)) : FQDNs with certificates in Certificate Manager
 
@@ -55,20 +55,18 @@ tg_server_private_ip (STRING) : Private IP for TG Backend Server
 tg_key_name (STRING) : Name of TG backend server EC2 Key pair
 ```
 
-
-
 ## **Usage**
 
-
-
 ### Create workspaces
-use `terraform workspace new production`, `terraform workspace new development` to create each environment.
 
+use `terraform workspace new production`, `terraform workspace new development` to create each environment.
 
 ---
 
 ### Build the Infrastructure
+
 - Using Taskfile for easy command input.
+
 ```
 task dev
     - terraform workspace select development

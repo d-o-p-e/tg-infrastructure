@@ -40,7 +40,7 @@ variable "tg_web_app_bucket_id" {
 
 variable "tg_web_app_domain_name" {
     type = string
-    description = "Domain URL of the Hosted TG Web App bucket"
+    description = "Domain path of the Hosted TG Web App bucket"
 }
 
 variable "webapp_origin" {

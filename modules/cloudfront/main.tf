@@ -21,7 +21,7 @@ resource "aws_cloudfront_distribution" "media_bucket_distribution" {
     allowed_methods  = var.public_allowed_http_methods
     cached_methods   = var.public_cached_http_methods
     target_origin_id = var.dope_media_bucket_id
-
+    compress            = true
     forwarded_values {
       query_string = false
 
@@ -31,9 +31,6 @@ resource "aws_cloudfront_distribution" "media_bucket_distribution" {
     }
 
     viewer_protocol_policy = "allow-all"
-    min_ttl                = 0
-    default_ttl            = 3600
-    max_ttl                = 86400
   }
 
   price_class = "PriceClass_All"
@@ -54,11 +51,6 @@ resource "aws_cloudfront_distribution" "media_bucket_distribution" {
   }
 }
 
-
-resource "aws_cloudfront_origin_access_identity" "tg_web_app_origin_access_identity" {
-  comment = "Distribution of TG Web App bucket"
-}
-
 resource "aws_cloudfront_distribution" "tg_web_app_distribution" {
   origin {
     domain_name = var.tg_web_app_domain_name
@@ -68,7 +60,7 @@ resource "aws_cloudfront_distribution" "tg_web_app_distribution" {
       http_port              = "80"
       https_port             = "443"
       origin_protocol_policy = "https-only"
-      origin_ssl_protocols   = ["TLSv1", "TLSv1.1", "TLSv1.2"]
+      origin_ssl_protocols   = ["TLSv1.2"]
     }
   }
 
@@ -83,19 +75,10 @@ resource "aws_cloudfront_distribution" "tg_web_app_distribution" {
     allowed_methods  = var.public_allowed_http_methods
     cached_methods   = var.public_cached_http_methods
     target_origin_id = var.tg_web_app_bucket_id
-
-    forwarded_values {
-      query_string = true
-
-      cookies {
-        forward = "none"
-      }
-    }
+    compress            = true
+    cache_policy_id = data.aws_cloudfront_cache_policy.caching_optimized_cache_policy.id
 
     viewer_protocol_policy = "redirect-to-https"
-    min_ttl                = 0
-    default_ttl            = 3600
-    max_ttl                = 86400
   }
 
   price_class = "PriceClass_All"

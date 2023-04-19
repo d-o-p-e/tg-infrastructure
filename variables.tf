@@ -78,11 +78,6 @@ variable "fully_qualified_domain_names" {
     description = "FQDNs with certificates in Certificate Manager"
 }
 
-variable "tg_web_app_certificate_arn" {
-    type = string
-    description = "ARN of certificate of tg web app in US-EAST-1"
-}
-
 variable "tg_server_private_ip" {
     type = string
     description = "Private IP for TG Backend Server"

@@ -1,5 +1,5 @@
-output "database_url" {
-    value = module.database.database_url
+output "database_path" {
+    value = module.database.database_path
 }
 
 output "web_app_cdn_uri" {
@@ -20,4 +20,8 @@ output "tg_load_balancer_uri" {
 
 output "tg_backend_server_public_ip" {
     value = module.server.tg_backend_server_public_ip
+}
+
+output "tg_web_app_domain_name" {
+    value = module.web-app.tg_web_app_domain_name
 }

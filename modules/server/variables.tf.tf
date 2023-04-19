@@ -25,5 +25,5 @@ variable "tg_key_name" {
 
 variable "tg_backend_certificate_arn" {
     type = string
-    description = "ARN or the certificate to the backend origin URL"
+    description = "ARN or the certificate to the backend origin path"
 }
