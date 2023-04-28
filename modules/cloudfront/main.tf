@@ -98,5 +98,6 @@ resource "aws_cloudfront_distribution" "tg_web_app_distribution" {
     acm_certificate_arn = var.tg_web_app_certificate_arn
     cloudfront_default_certificate = false
     ssl_support_method = "sni-only"
+    minimum_protocol_version = "TLSv1.2_2021"
   }
 }
