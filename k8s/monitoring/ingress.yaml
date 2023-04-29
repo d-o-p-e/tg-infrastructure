@@ -1,0 +1,67 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: monitoring
+  namespace: monitoring
+  annotations:
+    # ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    # kubernetes.io/tls-acme: "true"
+    # cert-manager.io/issuer: "letsencrypt-prod"
+spec:
+  # tls:
+  # - hosts:
+  #   - monitor.yanychoi.site
+  #   secretName: ingress-tls-secrets
+  ingressClassName: nginx
+  rules:
+  - host: localhost
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: grafana
+            port:
+              number: 3000
+  - host: monitor.yanychoi.site
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: grafana
+            port:
+              number: 3000
+  - host: prometheus.yanychoi.site
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: prometheus
+            port:
+              number: 9090
+  # - host: dope.yanychoi.site
+  #   http:
+  #     paths:
+  #     - path: /
+  #       pathType: Prefix
+  #       backend:
+  #         service:
+  #           name: frontEnd
+  #           port:
+  #             number: 3000
+  # - host: dopeapi.yanychoi.site
+  #   http:
+  #     paths:
+  #       path: /
+  #       pathType: Prefix
+  #       backend:
+  #         service:
+  #           name: core-service
+  #           port:
+  #             number: 8080
