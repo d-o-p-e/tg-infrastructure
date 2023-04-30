@@ -5,16 +5,19 @@ metadata:
   namespace: cicd
   annotations:
       prometheus.io/scrape: 'true'
-      prometheus.io/path:   /
+      prometheus.io/path:   /prometheus
       prometheus.io/port:   '8080'
 spec:
   selector: 
     app: jenkins
   type: ClusterIP
   ports:
-    - port: 8080
+    - name: web
+      port: 8080
       targetPort: 8080
-
+    - name: jnlp
+      port: 50000
+      targetPort: 50000
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -22,15 +25,14 @@ metadata:
   name: cicd
   namespace: cicd
   annotations:
-    # ingress.kubernetes.io/ssl-redirect: "true"
+    ingress.kubernetes.io/ssl-redirect: "true"
     nginx.ingress.kubernetes.io/rewrite-target: /
-    # kubernetes.io/tls-acme: "true"
-    # cert-manager.io/issuer: "letsencrypt-prod"
+    cert-manager.io/cluster-issuer: letsencrypt-prod
 spec:
-  # tls:
-  # - hosts:
-  #   - monitor.yanychoi.site
-  #   secretName: ingress-tls-secrets
+  tls:
+  - hosts:
+    - cicd.yanychoi.site
+    secretName: ingress-tls-secrets
   ingressClassName: nginx
   rules:
   - host: cicd.yanychoi.site
@@ -43,3 +45,13 @@ spec:
             name: jenkins
             port:
               number: 8080
+  - host: jenkins.yanychoi.site
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: jenkins
+            port:
+              number: 50000
