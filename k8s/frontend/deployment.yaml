@@ -1,17 +1,17 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: tg-frontend-service
+  name: tg-web-app
   namespace: web-app
 spec:
   selector:
     matchLabels:
-      app: tg-frontend-service
+      app: tg-web-app
   replicas: 2
   template:
     metadata:
       labels:
-        app: tg-frontend-service
+        app: tg-web-app
     spec:
       containers:
         - name: tg-web-app
@@ -20,18 +20,8 @@ spec:
           ports:
             - containerPort: 80
           volumeMounts:
-            - name: nginx-config
-              mountPath: /etc/nginx/conf.d
-            - name: nginx-ssl
-              mountPath: /etc/nginx/ssl
             - name: nginx-log
               mountPath: /var/log/nginx
       volumes:
-        - name: nginx-config
-          configMap:
-            name: nginx-config
-        - name: nginx-ssl
-          secret:
-            secretName: nginx-ssl
         - name: nginx-log
           emptyDir: {}

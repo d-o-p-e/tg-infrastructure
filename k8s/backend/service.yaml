@@ -23,20 +23,20 @@ metadata:
   namespace: backend-server
   annotations:
     ingress.kubernetes.io/ssl-redirect: "true"
-    nginx.ingress.kubernetes.io/rewrite-target: /
+    # nginx.ingress.kubernetes.io/rewrite-target: /
     kubernetes.io/tls-acme: "true"
     cert-manager.io/cluster-issuer: letsencrypt-prod
 spec:
   tls:
     - hosts:
-        - dopeapi.yanychoi.site
+        - dope.yanychoi.site
       secretName: ingress-tls-secrets
   ingressClassName: nginx
   rules:
-    - host: dopeapi.yanychoi.site
+    - host: dope.yanychoi.site
       http:
         paths:
-          - path: /
+          - path: /api
             pathType: Prefix
             backend:
               service:

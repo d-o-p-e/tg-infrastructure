@@ -23,7 +23,8 @@ spec:
               value: "http://grafana.monitoring.svc.cluster.local:3000"
           volumeMounts:
             - name: grafana-storage
-              mountPath: /var/lib/grafana
+              mountPath: /var/lib/grafana/
       volumes:
         - name: grafana-storage
-          emptyDir: {}
+          hostPath: 
+            path: /var/lib/grafana/
