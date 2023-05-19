@@ -1,0 +1,150 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tg-community
+  namespace: community
+spec:
+  selector:
+    matchLabels:
+      app: tg-community
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: tg-community
+    spec:
+      containers:
+        - name: tg-community
+          image: dopeteam/tg-community
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          env:
+            - name: KAKAO_CLIENT_ID
+              valueFrom:
+                configMapKeyRef:
+                  name: community-service-config
+                  key: KAKAO_CLIENT_ID
+            - name: KAKAO_REDIRECT_URI
+              valueFrom:
+                configMapKeyRef:
+                  name: community-service-config
+                  key: KAKAO_REDIRECT_URI
+            - name: KAKAO_API_URL_TOKEN
+              valueFrom:
+                configMapKeyRef:
+                  name: community-service-config
+                  key: KAKAO_API_URL_TOKEN
+            - name: KAKAO_API_URL_INFORMATION
+              valueFrom:
+                configMapKeyRef:
+                  name: community-service-config
+                  key: KAKAO_API_URL_INFORMATION
+            - name: S3_ACCESS_KEY
+              valueFrom:
+                configMapKeyRef:
+                  name: community-service-config
+                  key: S3_ACCESS_KEY
+            - name: S3_SECRET_KEY
+              valueFrom:
+                configMapKeyRef:
+                  name: community-service-config
+                  key: S3_SECRET_KEY
+            - name: S3_REGION_STATIC
+              valueFrom:
+                configMapKeyRef:
+                  name: community-service-config
+                  key: S3_REGION_STATIC
+            - name: S3_BUCKET
+              valueFrom:
+                configMapKeyRef:
+                  name: community-service-config
+                  key: S3_BUCKET
+            - name: S3_DIRECTORY_IMAGE
+              valueFrom:
+                configMapKeyRef:
+                  name: community-service-config
+                  key: S3_DIRECTORY_IMAGE
+            - name: S3_DIRECTORY_PROFILE
+              valueFrom:
+                configMapKeyRef:
+                  name: community-service-config
+                  key: S3_DIRECTORY_PROFILE
+            - name: DB_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: community-service-config
+                  key: DB_URL
+            - name: DB_USERNAME
+              valueFrom:
+                configMapKeyRef:
+                  name: community-service-config
+                  key: DB_USERNAME
+            - name: DB_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  name: community-service-config
+                  key: DB_PASSWORD
+            - name: REDIS_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: community-service-config
+                  key: REDIS_HOST
+            - name: REDIS_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: community-service-config
+                  key: REDIS_PORT
+            - name: REDIS_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  name: community-service-config
+                  key: REDIS_PASSWORD
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: tg-community-svc
+  namespace: community
+  annotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/path: /actuator/prometheus
+    prometheus.io/port: "8080"
+spec:
+  selector:
+    app: tg-community
+  type: ClusterIP
+  ports:
+    - port: 8080
+      targetPort: 8080
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: tg-community-ingress
+  namespace: community
+  annotations:
+    ingress.kubernetes.io/ssl-redirect: "true"
+    # nginx.ingress.kubernetes.io/rewrite-target: /
+    kubernetes.io/tls-acme: "true"
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+spec:
+  tls:
+    - hosts:
+        - dope.yanychoi.site
+      secretName: ingress-tls-secrets
+  ingressClassName: nginx
+  rules:
+    - host: dope.yanychoi.site
+      http:
+        paths:
+          - path: /api/community
+            pathType: Prefix
+            backend:
+              service:
+                name: tg-community-svc
+                port:
+                  number: 8080

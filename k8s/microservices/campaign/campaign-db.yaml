@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: campaign-db
+  namespace: campaign
+spec:
+  selector:
+    matchLabels:
+      app: campaign-db
+  # serviceName: campaign-db-svc
+  replicas: 1
+  minReadySeconds: 5
+  template:
+    metadata:
+      labels:
+        app: campaign-db
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+        - name: mysql
+          image: mysql:8.0.33
+          ports:
+            - containerPort: 3306
+              name: mysql
+          volumeMounts:
+              - name: mysql-persistent-storage
+                mountPath: /var/lib/mysql
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: "1234"
+            - name: MYSQL_DATABASE
+              value: tg_campaign
+  volumeClaimTemplates:
+    - metadata:
+        name: mysql-persistent-storage
+        namespace: campaign
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        storageClassName: "nfs-client"
+        resources:
+          requests:
+            storage: 5Gi

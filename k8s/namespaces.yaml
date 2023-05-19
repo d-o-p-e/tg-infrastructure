@@ -17,3 +17,23 @@ apiVersion: v1
 kind: Namespace
 metadata:
   name: cicd
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: mq
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: user
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: campaign
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: community
