@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tg-mailing
+  namespace: mailing
+spec:
+  selector:
+    matchLabels:
+      app: tg-mailing
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: tg-mailing
+    spec:
+      containers:
+        - name: tg-mailing
+          image: dopeteam/tg-mailing
+          imagePullPolicy: Always
+          env:
+            - name: MAIL_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: mailing-service-config
+                  key: MAIL_HOST
+            - name: MAIL_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: mailing-service-config
+                  key: MAIL_PORT
+            - name: MAIL_USERNAME
+              valueFrom:
+                configMapKeyRef:
+                  name: mailing-service-config
+                  key: MAIL_USERNAME
+            - name: MAIL_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  name: mailing-service-config
+                  key: MAIL_PASSWORD
+            - name: KAFKA_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: mailing-service-config
+                  key: KAFKA_HOST
+            - name: KAFKA_GROUP_ID
+              valueFrom:
+                configMapKeyRef:
+                  name: mailing-service-config
+                  key: KAFKA_GROUP_ID
+            - name: KAFKA_TOPIC
+              valueFrom:
+                configMapKeyRef:
+                  name: mailing-service-config
+                  key: KAFKA_TOPIC
