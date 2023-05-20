@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: community-db
+  name: tg-community-db
   namespace: community
 spec:
   selector:
     matchLabels:
-      app: community-db
-  # serviceName: community-db-svc
+      app: tg-community-db
+  # serviceName: tg-community-db-svc
   replicas: 1
   minReadySeconds: 5
   template:
     metadata:
       labels:
-        app: community-db
+        app: tg-community-db
     spec:
       terminationGracePeriodSeconds: 10
       containers:

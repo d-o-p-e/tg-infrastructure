@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: campaign-db
+  name: tg-campaign-db
   namespace: campaign
 spec:
   selector:
     matchLabels:
-      app: campaign-db
-  # serviceName: campaign-db-svc
+      app: tg-campaign-db
+  # serviceName: tg-campaign-db-svc
   replicas: 1
   minReadySeconds: 5
   template:
     metadata:
       labels:
-        app: campaign-db
+        app: tg-campaign-db
     spec:
       terminationGracePeriodSeconds: 10
       containers:

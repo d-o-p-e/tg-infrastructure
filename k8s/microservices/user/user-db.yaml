@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: campaign-db
-  namespace: campaign
+  name: tg-user-db
+  namespace: user
 spec:
   selector:
     matchLabels:
-      app: campaign-db
-  # serviceName: campaign-db-svc
+      app: tg-user-db
+  # serviceName: tg-user-db-svc
   replicas: 1
   minReadySeconds: 5
   template:
     metadata:
       labels:
-        app: campaign-db
+        app: tg-user-db
     spec:
       terminationGracePeriodSeconds: 10
       containers:
@@ -29,11 +29,11 @@ spec:
             - name: MYSQL_ROOT_PASSWORD
               value: "1234"
             - name: MYSQL_DATABASE
-              value: tg_campaign
+              value: tg_user
   volumeClaimTemplates:
     - metadata:
         name: mysql-persistent-storage
-        namespace: campaign
+        namespace: user
       spec:
         accessModes: [ "ReadWriteOnce" ]
         storageClassName: "nfs-client"
