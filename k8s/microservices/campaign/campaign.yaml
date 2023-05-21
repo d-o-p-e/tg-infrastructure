@@ -50,6 +50,11 @@ spec:
                 configMapKeyRef:
                   name: campaign-service-config
                   key: REDIS_PASSWORD
+            - name: KAFKA_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: campaign-service-config
+                  key: KAFKA_HOST
 
 ---
 

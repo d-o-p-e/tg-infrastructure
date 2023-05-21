@@ -100,7 +100,11 @@ spec:
                 configMapKeyRef:
                   name: community-service-config
                   key: REDIS_PASSWORD
-
+            - name: KAFKA_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: community-service-config
+                  key: KAFKA_HOST
 ---
 
 apiVersion: v1
