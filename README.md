@@ -1,4 +1,4 @@
 # Infrastructure for Committed
 \
 \
-![DrawIO](./drawio.png)
+![DrawIO](./diagram.png)
