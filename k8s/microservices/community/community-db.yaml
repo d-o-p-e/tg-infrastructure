@@ -40,3 +40,18 @@ spec:
         resources:
           requests:
             storage: 5Gi
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: tg-community-db-svc
+  namespace: community
+spec:
+  selector:
+    app: tg-community-db
+  type: ClusterIP
+  ports:
+    - port: 3306
+      targetPort: 3306
