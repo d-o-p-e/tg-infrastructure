@@ -66,18 +66,19 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: campaign-db
-  serviceName: campaign-db-svc
+      app: session-db
+  serviceName: session-db-svc
   replicas: 1
   minReadySeconds: 5
   template:
     metadata:
       labels:
-        app: campaign-db
+        app: session-db
     spec:
       containers:
         - name: redis
           image: redis:7.0.11
+          args: ["--requirepass", "$(REDIS_PASSWORD)"]
           ports:
             - containerPort: 6379
               name: redis
@@ -85,6 +86,8 @@ spec:
             - name: redis-persistent-storage
               mountPath: /data
           env:
+            - name: MASTER
+              value: "true"
             - name: REDIS_PASSWORD
               value: "1234"
   volumeClaimTemplates:
