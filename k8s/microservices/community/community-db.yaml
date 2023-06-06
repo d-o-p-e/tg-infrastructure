@@ -7,7 +7,7 @@ spec:
   selector:
     matchLabels:
       app: tg-community-db
-  # serviceName: tg-community-db-svc
+  serviceName: tg-community-db-svc
   replicas: 1
   minReadySeconds: 5
   template:

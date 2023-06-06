@@ -7,7 +7,7 @@ spec:
   selector:
     matchLabels:
       app: tg-campaign
-  replicas: 2
+  replicas: 1
   template:
     metadata:
       labels:
@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: tg-campaign
-          image: dopeteam/tg-campaign
+          image: dopeteam/tg-campaign:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
@@ -55,6 +55,37 @@ spec:
                 configMapKeyRef:
                   name: campaign-service-config
                   key: KAFKA_HOST
+            
+            - name: S3_ACCESS_KEY
+              valueFrom:
+                configMapKeyRef:
+                  name: campaign-service-config
+                  key: S3_ACCESS_KEY
+            - name: S3_SECRET_KEY
+              valueFrom:
+                configMapKeyRef:
+                  name: campaign-service-config
+                  key: S3_SECRET_KEY
+            - name: S3_REGION_STATIC
+              valueFrom:
+                configMapKeyRef:
+                  name: campaign-service-config
+                  key: S3_REGION_STATIC
+            - name: S3_BUCKET
+              valueFrom:
+                configMapKeyRef:
+                  name: campaign-service-config
+                  key: S3_BUCKET
+            - name: S3_DIRECTORY_IMAGE
+              valueFrom:
+                configMapKeyRef:
+                  name: campaign-service-config
+                  key: S3_DIRECTORY_IMAGE
+            - name: S3_DIRECTORY_PROFILE
+              valueFrom:
+                configMapKeyRef:
+                  name: campaign-service-config
+                  key: S3_DIRECTORY_PROFILE
 
 ---
 
@@ -65,7 +96,7 @@ metadata:
   namespace: campaign
   annotations:
     prometheus.io/scrape: "true"
-    prometheus.io/path: /actuator/prometheus
+    prometheus.io/path: /api/campaign/actuator/prometheus
     prometheus.io/port: "8080"
 spec:
   selector:
@@ -83,7 +114,6 @@ metadata:
   namespace: campaign
   annotations:
     ingress.kubernetes.io/ssl-redirect: "true"
-    # nginx.ingress.kubernetes.io/rewrite-target: /
     kubernetes.io/tls-acme: "true"
     cert-manager.io/cluster-issuer: letsencrypt-prod
 spec:

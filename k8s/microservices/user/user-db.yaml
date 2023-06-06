@@ -7,7 +7,7 @@ spec:
   selector:
     matchLabels:
       app: tg-user-db
-  # serviceName: tg-user-db-svc
+  serviceName: tg-user-db-svc
   replicas: 1
   minReadySeconds: 5
   template:

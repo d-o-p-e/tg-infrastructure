@@ -7,7 +7,7 @@ spec:
   selector:
     matchLabels:
       app: tg-campaign-db
-  # serviceName: tg-campaign-db-svc
+  serviceName: tg-campaign-db-svc
   replicas: 1
   minReadySeconds: 5
   template:

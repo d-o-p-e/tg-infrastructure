@@ -29,11 +29,11 @@ metadata:
 spec:
   tls:
     - hosts:
-        - dope.yanychoi.site
+        - dopeapi.yanychoi.site
       secretName: ingress-tls-secrets
   ingressClassName: nginx
   rules:
-    - host: dope.yanychoi.site
+    - host: dopeapi.yanychoi.site
       http:
         paths:
           - path: /api
